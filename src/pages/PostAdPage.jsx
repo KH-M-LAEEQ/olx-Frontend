@@ -14,6 +14,7 @@ export default function PostAdPage() {
   const [form, setForm]             = useState({ title: '', description: '', price: '', category: '', location: '', condition: 'used' })
   const [images, setImages]         = useState([])
   const [previews, setPreviews]     = useState([])
+  const [existingImages, setExistingImages] = useState([])
   const [categories, setCategories] = useState([])
   const [errors, setErrors]         = useState({})
   const [loading, setLoading]       = useState(false)
@@ -22,10 +23,15 @@ export default function PostAdPage() {
     if (!user) { navigate('/login'); return }
     api.get('/categories/').then(r => setCategories(r.data.results || r.data))
     if (isEdit) {
-      api.get(`/ads/${id}/`).then(({ data }) => setForm({
-        title: data.title, description: data.description, price: data.price,
-        category: data.category?.id || '', location: data.location, condition: data.condition,
-      }))
+      api.get(`/ads/${id}/`).then(({ data }) => {
+        setForm({
+          title: data.title, description: data.description, price: data.price,
+          category: data.category?.id || '', location: data.location, condition: data.condition,
+        })
+        const imgs = data.images || []
+        setExistingImages(imgs)
+        setPreviews(imgs.map(i => i.image))
+      })
     }
   }, [user, id])
 
@@ -34,6 +40,7 @@ export default function PostAdPage() {
   const handleImages = (e) => {
     const files = Array.from(e.target.files)
     setImages(files)
+    setExistingImages([])
     setPreviews(files.map(f => URL.createObjectURL(f)))
   }
 
@@ -122,7 +129,10 @@ export default function PostAdPage() {
           {/* Photos */}
           <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <h2 className="text-sm font-black text-[#002f34] uppercase tracking-wide mb-4">
-              Upload Photos {!isEdit && <span className="text-gray-400 font-normal normal-case text-xs">(first = cover)</span>}
+              {isEdit ? 'Photos' : 'Upload Photos'}
+              {' '}<span className="text-gray-400 font-normal normal-case text-xs">
+                {isEdit ? '(upload new to replace existing)' : '(first = cover)'}
+              </span>
             </h2>
             <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-8 cursor-pointer hover:border-[#002f34] hover:bg-[#002f34]/5 transition">
               <svg className="w-9 h-9 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

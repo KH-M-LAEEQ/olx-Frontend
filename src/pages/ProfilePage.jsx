@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext'
 const inp = 'w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white transition'
 
 export default function ProfilePage() {
-  const { user, login } = useAuth()
+  const { user, setUser } = useAuth()
   const navigate = useNavigate()
   const [form, setForm]       = useState({ username: '', email: '', phone: '', city: '', address: '' })
   const [avatar, setAvatar]   = useState(null)
@@ -40,7 +40,7 @@ export default function ProfilePage() {
     if (avatar) fd.append('avatar', avatar)
     try {
       const { data } = await api.patch('/auth/profile/', fd)
-      login(data, localStorage.getItem('access'), localStorage.getItem('refresh'))
+      setUser(data)
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
     } catch (err) {

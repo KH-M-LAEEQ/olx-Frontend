@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import api from '../services/api'
 
 const INFO_CARDS = [
   {
@@ -101,10 +102,18 @@ export default function ContactPage() {
     const e2 = validate()
     if (Object.keys(e2).length) { setErrors(e2); return }
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setStatus('success')
-    setForm({ name: '', email: '', subject: '', message: '' })
+    setStatus(null)
+    try {
+      await api.post('/auth/contact/', form)
+      setStatus('success')
+      setForm({ name: '', email: '', subject: '', message: '' })
+    } catch (err) {
+      const d = err.response?.data
+      if (d && typeof d === 'object') setErrors(d)
+      else setStatus('error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -156,6 +165,12 @@ export default function ContactPage() {
           <div className="lg:col-span-3 bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
             <h2 className="text-2xl font-black text-[#002f34] mb-1">Send us a message</h2>
             <p className="text-gray-400 text-sm mb-7">Fill in the form below and we'll get back to you within 24 hours.</p>
+
+            {status === 'error' && (
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-2xl mb-6">
+                Something went wrong. Please try again.
+              </div>
+            )}
 
             {status === 'success' && (
               <div className="flex items-start gap-3 bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-4 rounded-2xl mb-6">

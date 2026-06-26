@@ -1,10 +1,25 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import api from '../services/api'
 
 export default function Navbar() {
   const { user, logout } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [unread, setUnread] = useState(0)
+
+  useEffect(() => {
+    if (!user) { setUnread(0); return }
+    const fetchUnread = async () => {
+      try {
+        const { data } = await api.get('/messages/unread/')
+        setUnread(data.unread)
+      } catch {}
+    }
+    fetchUnread()
+    const id = setInterval(fetchUnread, 30000)
+    return () => clearInterval(id)
+  }, [user])
 
   const handleLogout = async () => { await logout(); window.location.href = '/' }
 
@@ -58,6 +73,25 @@ export default function Navbar() {
                   className="hidden md:block font-bold text-[#002f34] text-sm hover:text-[#3a77ff] transition">
                   My Ads
                 </Link>
+                <Link to="/favourites"
+                  className="hidden md:flex items-center gap-1.5 font-bold text-[#002f34] text-sm hover:text-[#3a77ff] transition">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  Saved
+                </Link>
+                <Link to="/messages"
+                  className="hidden md:flex items-center gap-1.5 font-bold text-[#002f34] text-sm hover:text-[#3a77ff] transition relative">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  {unread > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
+                      {unread > 9 ? '9+' : unread}
+                    </span>
+                  )}
+                </Link>
                 <Link to="/profile"
                   className="hidden md:flex items-center gap-2 font-bold text-[#002f34] text-sm hover:text-[#3a77ff] transition">
                   <div className="w-7 h-7 rounded-full bg-[#002f34] flex items-center justify-center text-[#ffce32] text-xs font-black shrink-0">
@@ -109,6 +143,10 @@ export default function Navbar() {
           {user ? (
             <>
               <Link to="/my-ads"  className="block py-2.5 font-bold text-[#002f34] text-sm border-b border-gray-100" onClick={() => setMenuOpen(false)}>My Ads</Link>
+              <Link to="/messages" className="block py-2.5 font-bold text-[#002f34] text-sm border-b border-gray-100" onClick={() => setMenuOpen(false)}>
+                Messages {unread > 0 && <span className="ml-1 bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">{unread}</span>}
+              </Link>
+              <Link to="/favourites" className="block py-2.5 font-bold text-[#002f34] text-sm border-b border-gray-100" onClick={() => setMenuOpen(false)}>Favourites</Link>
               <Link to="/profile" className="block py-2.5 font-bold text-[#002f34] text-sm border-b border-gray-100" onClick={() => setMenuOpen(false)}>Profile — {user.username}</Link>
               <button onClick={() => { handleLogout(); setMenuOpen(false) }} className="block w-full text-left py-2.5 font-bold text-red-500 text-sm">Logout</button>
             </>

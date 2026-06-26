@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
 
@@ -22,6 +22,69 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [showPw, setShowPw]   = useState(false)
   const { login } = useAuth()
+  const navigate = useNavigate()
+
+  // Forgot password state
+  const [showForgot, setShowForgot]       = useState(false)
+  const [forgotEmail, setForgotEmail]     = useState('')
+  const [forgotStep, setForgotStep]       = useState(1)
+  const [devOtp, setDevOtp]               = useState('')
+  const [otpDigits, setOtpDigits]         = useState(['', '', '', '', '', ''])
+  const [resetPasswords, setResetPasswords] = useState({ password: '', password2: '' })
+  const [forgotMsg, setForgotMsg]         = useState('')
+  const [forgotErr, setForgotErr]         = useState('')
+  const [forgotLoading, setForgotLoading] = useState(false)
+  const otpRef0 = useRef(); const otpRef1 = useRef(); const otpRef2 = useRef()
+  const otpRef3 = useRef(); const otpRef4 = useRef(); const otpRef5 = useRef()
+  const otpRefs = [otpRef0, otpRef1, otpRef2, otpRef3, otpRef4, otpRef5]
+
+  const handleOtpDigit = (i, val) => {
+    const v = val.replace(/\D/g, '').slice(-1)
+    const next = [...otpDigits]; next[i] = v; setOtpDigits(next)
+    if (v && i < 5) otpRefs[i + 1].current?.focus()
+  }
+  const handleOtpKey = (i, e) => {
+    if (e.key === 'Backspace' && !otpDigits[i] && i > 0) otpRefs[i - 1].current?.focus()
+  }
+  const handleOtpPaste = (e) => {
+    const p = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
+    if (p.length === 6) { setOtpDigits(p.split('')); otpRefs[5].current?.focus() }
+    e.preventDefault()
+  }
+
+  const handleForgotRequest = async (e) => {
+    e.preventDefault()
+    setForgotErr('')
+    setForgotLoading(true)
+    try {
+      const { data } = await api.post('/auth/password-reset/', { email: forgotEmail })
+      setDevOtp(data.otp || '')
+      setForgotStep(2)
+      setTimeout(() => otpRefs[0].current?.focus(), 100)
+    } catch (err) {
+      setForgotErr(err.response?.data?.detail || 'Something went wrong.')
+    } finally {
+      setForgotLoading(false)
+    }
+  }
+
+  const handleForgotConfirm = async (e) => {
+    e.preventDefault()
+    setForgotErr('')
+    const otp = otpDigits.join('')
+    if (otp.length < 6) { setForgotErr('Enter all 6 digits.'); return }
+    setForgotLoading(true)
+    try {
+      const { data } = await api.post('/auth/password-reset/confirm/', { otp, email: forgotEmail, ...resetPasswords })
+      setForgotMsg(data.detail)
+      setTimeout(() => { setShowForgot(false); setForgotStep(1); setForgotEmail(''); setForgotMsg(''); setOtpDigits(['','','','','','']); setDevOtp('') }, 2500)
+    } catch (err) {
+      const d = err.response?.data
+      setForgotErr(d?.detail || d?.password?.join(' ') || 'Something went wrong.')
+    } finally {
+      setForgotLoading(false)
+    }
+  }
 
   useEffect(() => {
     // Google Identity Services
@@ -54,7 +117,7 @@ export default function LoginPage() {
     try {
       const { data } = await api.post('/auth/login/', form)
       login(data.access, data.refresh)
-      window.location.href = '/'
+      navigate('/')
     } catch (err) {
       setError(err.response?.data?.detail || 'Invalid username or password.')
     } finally {
@@ -71,7 +134,7 @@ export default function LoginPage() {
         try {
           const { data } = await api.post('/auth/google/', { credential })
           login(data.access, data.refresh)
-          window.location.href = '/'
+          navigate('/')
         } catch (err) {
           const msg = err.response?.data?.error || err.response?.data?.detail || err.message || 'Unknown error'
           setError(`Google login failed: ${msg}`)
@@ -87,7 +150,7 @@ export default function LoginPage() {
       if (response.authResponse) {
         setLoading(true)
         api.post('/auth/facebook/', { access_token: response.authResponse.accessToken })
-          .then(({ data }) => { login(data.access, data.refresh); window.location.href = '/' })
+          .then(({ data }) => { login(data.access, data.refresh); navigate('/') })
           .catch(() => setError('Facebook login failed. Backend social auth may not be configured yet.'))
           .finally(() => setLoading(false))
       }
@@ -95,6 +158,7 @@ export default function LoginPage() {
   }
 
   return (
+    <>
     <div className="min-h-[calc(100vh-64px)] bg-[#f2f4f5] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-4xl flex rounded-3xl overflow-hidden shadow-xl">
 
@@ -205,7 +269,8 @@ export default function LoginPage() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-xs font-bold text-[#002f34] uppercase tracking-wide">Password</label>
-                <button type="button" className="text-xs text-[#3a77ff] hover:underline font-medium">
+                <button type="button" onClick={() => { setShowForgot(true); setForgotStep(1); setForgotErr(''); setForgotMsg('') }}
+                  className="text-xs text-[#3a77ff] hover:underline font-medium">
                   Forgot password?
                 </button>
               </div>
@@ -255,5 +320,86 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+
+    {/* ── Forgot Password Modal ── */}
+
+    {showForgot && (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+        onClick={e => { if (e.target === e.currentTarget) setShowForgot(false) }}>
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-lg font-black text-[#002f34]">Reset Password</h2>
+            <button onClick={() => setShowForgot(false)} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
+          </div>
+
+          {forgotMsg ? (
+            <div className="bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl text-center">
+              {forgotMsg}
+            </div>
+          ) : forgotStep === 1 ? (
+            <form onSubmit={handleForgotRequest} className="space-y-4">
+              <p className="text-sm text-gray-500">Enter your account email and we'll send you a 6-digit reset code.</p>
+              {forgotErr && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{forgotErr}</p>}
+              <div>
+                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Email</label>
+                <input type="email" value={forgotEmail} onChange={e => setForgotEmail(e.target.value)} required
+                  placeholder="your@email.com"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+              </div>
+              <button type="submit" disabled={forgotLoading}
+                className="w-full bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50">
+                {forgotLoading ? 'Sending...' : 'Send Reset Code'}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleForgotConfirm} className="space-y-4">
+              <p className="text-sm text-gray-500">Enter the 6-digit code sent to <strong>{forgotEmail}</strong></p>
+              {forgotErr && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{forgotErr}</p>}
+
+              {devOtp && (
+                <div className="bg-yellow-50 border border-yellow-300 rounded-xl px-4 py-3 text-center">
+                  <p className="text-xs font-bold text-yellow-700 mb-1 uppercase tracking-wide">Reset code (dev mode)</p>
+                  <p className="text-2xl font-black text-yellow-900 tracking-[0.3em]">{devOtp}</p>
+                </div>
+              )}
+
+              <div className="flex gap-2 justify-center" onPaste={handleOtpPaste}>
+                {otpDigits.map((d, i) => (
+                  <input key={i} ref={otpRefs[i]} type="text" inputMode="numeric" maxLength={1}
+                    value={d} onChange={e => handleOtpDigit(i, e.target.value)} onKeyDown={e => handleOtpKey(i, e)}
+                    className={`w-10 h-12 text-center text-xl font-black border-2 rounded-xl focus:outline-none transition
+                      ${d ? 'border-[#002f34] bg-[#002f34]/5 text-[#002f34]' : 'border-gray-200'}
+                      focus:border-[#002f34]`} />
+                ))}
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">New Password</label>
+                <input type="password" value={resetPasswords.password} onChange={e => setResetPasswords(p => ({ ...p, password: e.target.value }))} required
+                  placeholder="Min 8 characters"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Confirm Password</label>
+                <input type="password" value={resetPasswords.password2} onChange={e => setResetPasswords(p => ({ ...p, password2: e.target.value }))} required
+                  placeholder="Repeat password"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+              </div>
+              <div className="flex gap-2">
+                <button type="button" onClick={() => { setForgotStep(1); setOtpDigits(['','','','','','']); setDevOtp(''); setForgotErr('') }}
+                  className="flex-1 border border-gray-200 text-gray-600 font-bold py-3 rounded-xl text-sm hover:border-gray-300 transition">
+                  Back
+                </button>
+                <button type="submit" disabled={forgotLoading || otpDigits.join('').length < 6}
+                  className="flex-1 bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-40">
+                  {forgotLoading ? 'Resetting...' : 'Reset Password'}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    )}
+    </>
   )
 }

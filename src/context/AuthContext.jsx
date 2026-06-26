@@ -6,22 +6,23 @@ const AuthContext = createContext({
   loading: true,
   login: () => {},
   logout: async () => {},
+  setUser: () => {},
+  refreshUser: async () => {},
 })
 
 export function AuthProvider({ children }) {
   const [user, setUser]       = useState(null)
   const [loading, setLoading] = useState(true)
 
+  const fetchUser = () =>
+    api.get('/auth/profile/').then(({ data }) => { setUser(data); return data })
+
   useEffect(() => {
-    const token = localStorage.getItem('access')
-    if (token) {
-      api.get('/auth/profile/')
-        .then(({ data }) => setUser(data))
-        .catch(() => {
-          localStorage.removeItem('access')
-          localStorage.removeItem('refresh')
-        })
-        .finally(() => setLoading(false))
+    if (localStorage.getItem('access')) {
+      fetchUser().catch(() => {
+        localStorage.removeItem('access')
+        localStorage.removeItem('refresh')
+      }).finally(() => setLoading(false))
     } else {
       setLoading(false)
     }
@@ -30,6 +31,7 @@ export function AuthProvider({ children }) {
   const login = (access, refresh) => {
     localStorage.setItem('access', access)
     localStorage.setItem('refresh', refresh)
+    fetchUser().catch(() => {})
   }
 
   const logout = async () => {
@@ -41,8 +43,10 @@ export function AuthProvider({ children }) {
     setUser(null)
   }
 
+  const refreshUser = () => fetchUser()
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, setUser, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )

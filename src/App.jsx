@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import MainLayout from './layouts/MainLayout'
 import HomePage     from './pages/HomePage'
@@ -10,6 +10,10 @@ import MyAdsPage    from './pages/MyAdsPage'
 import ProfilePage  from './pages/ProfilePage'
 import SearchPage   from './pages/SearchPage'
 import ContactPage  from './pages/ContactPage'
+import FavouritesPage    from './pages/FavouritesPage'
+import MessagesPage      from './pages/MessagesPage'
+import ConversationPage  from './pages/ConversationPage'
+import VerifyEmailPage   from './pages/VerifyEmailPage'
 
 function NotFoundPage() {
   return (
@@ -17,9 +21,9 @@ function NotFoundPage() {
       <p className="text-7xl mb-4">😕</p>
       <h1 className="text-3xl font-black text-[#002f34] mb-2">Page Not Found</h1>
       <p className="text-gray-500 mb-6">The page you're looking for doesn't exist.</p>
-      <a href="/" className="bg-[#ffce32] text-[#002f34] font-black px-6 py-3 rounded-xl hover:bg-yellow-400 transition">
+      <Link to="/" className="bg-[#ffce32] text-[#002f34] font-black px-6 py-3 rounded-xl hover:bg-yellow-400 transition">
         Go Home
-      </a>
+      </Link>
     </div>
   )
 }
@@ -39,6 +43,10 @@ export default function App() {
           <Route path="profile"        element={<ProfilePage />} />
           <Route path="search"         element={<SearchPage />} />
           <Route path="contact"        element={<ContactPage />} />
+          <Route path="favourites"         element={<FavouritesPage />} />
+          <Route path="messages"           element={<MessagesPage />} />
+          <Route path="messages/:id"       element={<ConversationPage />} />
+          <Route path="verify-email"       element={<VerifyEmailPage />} />
           <Route path="*"              element={<NotFoundPage />} />
         </Route>
       </Routes>
