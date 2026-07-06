@@ -3,6 +3,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import { useAuth } from '../context/AuthContext'
 
+const WS_BASE = import.meta.env.VITE_WS_URL || 'ws://127.0.0.1:8000'
+
 const ago = (d) => {
   const s = Math.floor((Date.now() - new Date(d)) / 1000)
   if (s < 60)    return 'just now'
@@ -15,24 +17,52 @@ export default function ConversationPage() {
   const { id }   = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
-  const [conv, setConv]       = useState(null)
-  const [body, setBody]       = useState('')
-  const [sending, setSending] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [conv, setConv]           = useState(null)
+  const [body, setBody]           = useState('')
+  const [sending, setSending]     = useState(false)
+  const [loading, setLoading]     = useState(true)
   const [sendError, setSendError] = useState('')
+  const [wsReady, setWsReady]     = useState(false)
   const bottomRef = useRef(null)
+  const wsRef     = useRef(null)
 
-  const load = () =>
-    api.get(`/messages/${id}/`).then(({ data }) => {
-      setConv(data)
-      setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
-    })
+  const scrollToBottom = () =>
+    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 50)
 
+  // Initial load via REST (gets history + marks messages as read)
   useEffect(() => {
     if (!user) { navigate('/login'); return }
-    load().finally(() => setLoading(false))
-    const interval = setInterval(load, 10000)
-    return () => clearInterval(interval)
+    api.get(`/messages/${id}/`)
+      .then(({ data }) => { setConv(data); scrollToBottom() })
+      .finally(() => setLoading(false))
+  }, [id, user])
+
+  // WebSocket connection — replaces the 10s polling
+  useEffect(() => {
+    if (!user) return
+    const token = localStorage.getItem('access')
+    if (!token) return
+
+    const ws = new WebSocket(`${WS_BASE}/ws/messages/${id}/?token=${token}`)
+    wsRef.current = ws
+
+    ws.onopen  = () => setWsReady(true)
+    ws.onclose = () => setWsReady(false)
+    ws.onerror = () => setWsReady(false)
+
+    ws.onmessage = (e) => {
+      const msg = JSON.parse(e.data)
+      // sender_id lets each client work out is_mine independently
+      const enriched = { ...msg, is_mine: msg.sender_id === user.id }
+      setConv(prev => {
+        if (!prev) return prev
+        if (prev.messages?.some(m => m.id === enriched.id)) return prev
+        return { ...prev, messages: [...(prev.messages || []), enriched] }
+      })
+      scrollToBottom()
+    }
+
+    return () => { ws.close(); wsRef.current = null }
   }, [id, user])
 
   const handleSend = async (e) => {
@@ -40,13 +70,26 @@ export default function ConversationPage() {
     if (!body.trim()) return
     setSendError('')
     setSending(true)
-    try {
-      await api.post(`/messages/${id}/reply/`, { body })
+
+    const ws = wsRef.current
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ body }))
       setBody('')
-      await load()
-    } catch {
-      setSendError('Failed to send. Please try again.')
-    } finally { setSending(false) }
+      setSending(false)
+    } else {
+      // Fallback: REST API if WebSocket not connected
+      try {
+        await api.post(`/messages/${id}/reply/`, { body })
+        const { data } = await api.get(`/messages/${id}/`)
+        setConv(data)
+        setBody('')
+        scrollToBottom()
+      } catch {
+        setSendError('Failed to send. Please try again.')
+      } finally {
+        setSending(false)
+      }
+    }
   }
 
   if (loading) return (
@@ -76,6 +119,7 @@ export default function ConversationPage() {
             </Link>
             <p className="text-xs text-gray-400">with {conv.other_user?.username}</p>
           </div>
+          <span className={`w-2 h-2 rounded-full ${wsReady ? 'bg-green-400' : 'bg-gray-300'}`} title={wsReady ? 'Live' : 'Connecting...'} />
         </div>
       </div>
 
