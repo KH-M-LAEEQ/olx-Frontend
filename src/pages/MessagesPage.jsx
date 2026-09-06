@@ -35,12 +35,12 @@ export default function MessagesPage() {
   return (
     <div className="bg-[#f2f4f5] min-h-screen">
       <div className="max-w-2xl mx-auto px-4 py-7">
-        <h1 className="text-xl font-black text-[#002f34] mb-5">Messages</h1>
+        <h1 className="text-xl font-black text-[#241242] mb-5">Messages</h1>
 
         {convs.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-200 py-16 text-center">
             <p className="text-5xl mb-3">💬</p>
-            <p className="font-black text-[#002f34] text-lg mb-1">No messages yet</p>
+            <p className="font-black text-[#241242] text-lg mb-1">No messages yet</p>
             <p className="text-sm text-gray-400">Start a conversation by clicking "Chat with Seller" on any ad.</p>
           </div>
         ) : (
@@ -56,7 +56,7 @@ export default function MessagesPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-bold text-[#002f34] truncate">{conv.ad_title}</p>
+                    <p className="text-sm font-bold text-[#241242] truncate">{conv.ad_title}</p>
                     {conv.last_message && (
                       <span className="text-xs text-gray-400 shrink-0 ml-2">{ago(conv.last_message.created_at)}</span>
                     )}

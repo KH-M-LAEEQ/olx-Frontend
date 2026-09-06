@@ -1,6 +1,6 @@
-# OLX Frontend
+# Bazaario Frontend
 
-React + Vite frontend for the OLX Clone project.
+React + Vite frontend for the Bazaario project.
 
 ## Branches
 - `main` — stable releases

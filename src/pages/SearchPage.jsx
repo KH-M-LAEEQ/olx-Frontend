@@ -48,7 +48,7 @@ export default function SearchPage() {
     setPage(1)
   }
 
-  const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#002f34] bg-white'
+  const inp = 'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#241242] bg-white'
 
   return (
     <div className="bg-[#f2f4f5] min-h-screen">
@@ -59,8 +59,8 @@ export default function SearchPage() {
           <aside className="hidden md:block w-60 shrink-0">
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                <span className="text-sm font-black text-[#002f34]">Filters</span>
-                <button onClick={reset} className="text-xs text-[#3a77ff] hover:underline font-semibold">Clear all</button>
+                <span className="text-sm font-black text-[#241242]">Filters</span>
+                <button onClick={reset} className="text-xs text-[#7c3aed] hover:underline font-semibold">Clear all</button>
               </div>
               <div className="p-4 space-y-5">
 
@@ -69,14 +69,14 @@ export default function SearchPage() {
                   <div className="space-y-1.5">
                     <label className="flex items-center gap-2 text-sm cursor-pointer">
                       <input type="radio" name="cat" checked={!filters.category} onChange={() => set('category', '')}
-                        className="accent-[#002f34]" />
-                      <span className={!filters.category ? 'text-[#002f34] font-bold' : 'text-gray-600'}>All Categories</span>
+                        className="accent-[#241242]" />
+                      <span className={!filters.category ? 'text-[#241242] font-bold' : 'text-gray-600'}>All Categories</span>
                     </label>
                     {categories.map(c => (
                       <label key={c.id} className="flex items-center gap-2 text-sm cursor-pointer">
                         <input type="radio" name="cat" checked={filters.category === c.slug}
-                          onChange={() => set('category', c.slug)} className="accent-[#002f34]" />
-                        <span className={filters.category === c.slug ? 'text-[#002f34] font-bold' : 'text-gray-600'}>
+                          onChange={() => set('category', c.slug)} className="accent-[#241242]" />
+                        <span className={filters.category === c.slug ? 'text-[#241242] font-bold' : 'text-gray-600'}>
                           {c.icon} {c.name}
                         </span>
                       </label>
@@ -109,11 +109,11 @@ export default function SearchPage() {
             {/* Top bar */}
             <div className="flex items-center gap-3 mb-4">
               <form onSubmit={e => { e.preventDefault(); fetchAds() }}
-                className="flex flex-1 bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#002f34] transition">
+                className="flex flex-1 bg-white border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#241242] transition">
                 <input type="text" value={filters.q} onChange={e => set('q', e.target.value)}
                   placeholder="Search ads..."
                   className="flex-1 px-4 py-2.5 text-sm focus:outline-none" />
-                <button type="submit" className="bg-[#002f34] hover:bg-[#013a40] px-5 flex items-center transition">
+                <button type="submit" className="bg-[#241242] hover:bg-[#1a0a33] px-5 flex items-center transition">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
                       d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
@@ -121,7 +121,7 @@ export default function SearchPage() {
                 </button>
               </form>
               <select value={filters.ordering} onChange={e => set('ordering', e.target.value)}
-                className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none shrink-0 font-semibold text-[#002f34]">
+                className="bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none shrink-0 font-semibold text-[#241242]">
                 <option value="-created_at">Newest first</option>
                 <option value="created_at">Oldest first</option>
                 <option value="price">Price ↑</option>
@@ -131,7 +131,7 @@ export default function SearchPage() {
 
             {!loading && (
               <p className="text-xs text-gray-500 mb-3">
-                <span className="font-bold text-[#002f34]">{total.toLocaleString()}</span> results
+                <span className="font-bold text-[#241242]">{total.toLocaleString()}</span> results
                 {filters.q && <> for "<em>{filters.q}</em>"</>}
               </p>
             )}
@@ -152,7 +152,7 @@ export default function SearchPage() {
             ) : ads.length === 0 ? (
               <div className="bg-white rounded-xl border border-gray-200 py-16 text-center">
                 <p className="text-4xl mb-3">🔍</p>
-                <p className="font-black text-[#002f34] text-lg">No results found</p>
+                <p className="font-black text-[#241242] text-lg">No results found</p>
                 <p className="text-sm text-gray-400 mt-1">Try different keywords or remove filters</p>
               </div>
             ) : (
@@ -163,13 +163,13 @@ export default function SearchPage() {
                 <div className="flex justify-center gap-2 mt-6">
                   {page > 1 && (
                     <button onClick={() => setPage(p => p - 1)}
-                      className="px-5 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-[#002f34] hover:border-[#002f34] transition">
+                      className="px-5 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-[#241242] hover:border-[#241242] transition">
                       ← Previous
                     </button>
                   )}
                   {ads.length === 20 && (
                     <button onClick={() => setPage(p => p + 1)}
-                      className="px-5 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-[#002f34] hover:border-[#002f34] transition">
+                      className="px-5 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-[#241242] hover:border-[#241242] transition">
                       Next →
                     </button>
                   )}

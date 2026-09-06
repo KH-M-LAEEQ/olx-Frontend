@@ -114,7 +114,7 @@ export default function ConversationPage() {
             <img src={conv.ad_cover} alt={conv.ad_title} className="w-9 h-9 rounded-lg object-cover border border-gray-200" />
           )}
           <div className="flex-1 min-w-0">
-            <Link to={`/ads/${conv.ad_id}`} className="text-sm font-bold text-[#002f34] hover:underline truncate block">
+            <Link to={`/ads/${conv.ad_id}`} className="text-sm font-bold text-[#241242] hover:underline truncate block">
               {conv.ad_title}
             </Link>
             <p className="text-xs text-gray-400">with {conv.other_user?.username}</p>
@@ -130,7 +130,7 @@ export default function ConversationPage() {
         )}
         {conv.messages?.map(msg => (
           <div key={msg.id} className={`flex ${msg.is_mine ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${msg.is_mine ? 'bg-[#002f34] text-white rounded-br-sm' : 'bg-white border border-gray-200 text-gray-800 rounded-bl-sm'}`}>
+            <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${msg.is_mine ? 'bg-[#241242] text-white rounded-br-sm' : 'bg-white border border-gray-200 text-gray-800 rounded-bl-sm'}`}>
               <p className="text-sm leading-relaxed">{msg.body}</p>
               <p className={`text-[10px] mt-1 ${msg.is_mine ? 'text-white/50 text-right' : 'text-gray-400'}`}>{ago(msg.created_at)}</p>
             </div>
@@ -146,9 +146,9 @@ export default function ConversationPage() {
           <input
             type="text" value={body} onChange={e => setBody(e.target.value)}
             placeholder="Type a message..."
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#002f34] bg-white transition" />
+            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#241242] bg-white transition" />
           <button type="submit" disabled={sending || !body.trim()}
-            className="bg-[#002f34] hover:bg-[#013a40] disabled:opacity-40 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
+            className="bg-[#241242] hover:bg-[#1a0a33] disabled:opacity-40 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition">
             Send
           </button>
         </form>

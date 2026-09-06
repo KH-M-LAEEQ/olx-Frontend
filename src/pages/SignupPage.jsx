@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
+import Logo from '../components/Logo'
 
-const inp = 'w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white transition'
+const inp = 'w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#241242] bg-white transition'
 
 function Field({ name, label, type = 'text', placeholder, value, onChange, errors, required }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">{label}</label>
+      <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">{label}</label>
       <input type={type} name={name} value={value} onChange={onChange} required={required}
         placeholder={placeholder} className={inp} />
       {errors[name] && (
@@ -106,11 +107,11 @@ export default function SignupPage() {
 
         <div className="text-center mb-6">
           <Link to="/" className="inline-block mb-4">
-            <div className="bg-white border-b-[3px] border-[#3a77ff] px-4 py-2 rounded-sm inline-block">
-              <span className="text-[#002f34] font-black text-2xl tracking-tight italic">OLX</span>
+            <div className="bg-white border-b-[3px] border-[#7c3aed] px-4 py-2 rounded-sm inline-block">
+              <Logo size={28} />
             </div>
           </Link>
-          <p className="text-sm text-gray-500">Create your free OLX account</p>
+          <p className="text-sm text-gray-500">Create your free Bazaario account</p>
         </div>
 
         {errors.general && (
@@ -153,14 +154,14 @@ export default function SignupPage() {
           <Field name="password"  label="Password *"         placeholder="Min 8 characters" value={form.password}  type="password" required {...fp} />
           <Field name="password2" label="Confirm Password *" placeholder="Repeat password"  value={form.password2} type="password" required {...fp} />
           <button type="submit" disabled={loading}
-            className="w-full bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50 mt-2">
+            className="w-full bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50 mt-2">
             {loading ? 'Creating account...' : 'Register Free'}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-5">
           Already have an account?{' '}
-          <Link to="/login" className="text-[#3a77ff] font-bold hover:underline">Login</Link>
+          <Link to="/login" className="text-[#7c3aed] font-bold hover:underline">Login</Link>
         </p>
       </div>
     </div>

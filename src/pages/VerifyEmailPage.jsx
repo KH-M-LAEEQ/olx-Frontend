@@ -75,9 +75,9 @@ export default function VerifyEmailPage() {
       <div className="min-h-[60vh] flex items-center justify-center px-4">
         <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-sm w-full text-center shadow-sm">
           <p className="text-5xl mb-3">✅</p>
-          <h1 className="text-xl font-black text-[#002f34] mb-2">Email Verified</h1>
+          <h1 className="text-xl font-black text-[#241242] mb-2">Email Verified</h1>
           <p className="text-sm text-gray-500 mb-6">Your email address has been verified.</p>
-          <Link to="/" className="bg-[#ffce32] hover:bg-yellow-400 text-[#002f34] font-black px-6 py-3 rounded-xl text-sm inline-block transition">
+          <Link to="/" className="bg-[#ff5c8a] hover:bg-pink-400 text-[#241242] font-black px-6 py-3 rounded-xl text-sm inline-block transition">
             Go Home
           </Link>
         </div>
@@ -91,7 +91,7 @@ export default function VerifyEmailPage() {
 
         <div className="text-center mb-6">
           <p className="text-4xl mb-3">📧</p>
-          <h1 className="text-xl font-black text-[#002f34] mb-1">Verify Your Email</h1>
+          <h1 className="text-xl font-black text-[#241242] mb-1">Verify Your Email</h1>
           <p className="text-sm text-gray-500">
             Enter the 6-digit OTP sent to your email.
             <br />
@@ -132,8 +132,8 @@ export default function VerifyEmailPage() {
                 onChange={e => handleDigit(i, e.target.value)}
                 onKeyDown={e => handleKeyDown(i, e)}
                 className={`w-11 h-14 text-center text-xl font-black border-2 rounded-xl focus:outline-none transition
-                  ${d ? 'border-[#002f34] bg-[#002f34]/5 text-[#002f34]' : 'border-gray-200 text-gray-800'}
-                  focus:border-[#002f34]`}
+                  ${d ? 'border-[#241242] bg-[#241242]/5 text-[#241242]' : 'border-gray-200 text-gray-800'}
+                  focus:border-[#241242]`}
               />
             ))}
           </div>
@@ -141,7 +141,7 @@ export default function VerifyEmailPage() {
           <button
             type="submit"
             disabled={loading || digits.join('').length < 6}
-            className="w-full bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-40">
+            className="w-full bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-40">
             {loading ? 'Verifying...' : 'Verify Email'}
           </button>
         </form>
@@ -151,7 +151,7 @@ export default function VerifyEmailPage() {
           <button
             onClick={handleResend}
             disabled={resending}
-            className="text-sm text-[#3a77ff] hover:underline font-bold disabled:opacity-50">
+            className="text-sm text-[#7c3aed] hover:underline font-bold disabled:opacity-50">
             {resending ? 'Sending...' : 'Resend OTP'}
           </button>
         </div>

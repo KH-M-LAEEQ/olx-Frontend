@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
+import Logo from './Logo'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#002f34] text-white/60 text-sm mt-8">
+    <footer className="bg-[#241242] text-white/60 text-sm mt-8">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
 
         <div>
-          <div className="bg-white inline-block border-b-[3px] border-[#3a77ff] px-3 py-1.5 rounded-sm mb-3">
-            <span className="text-[#002f34] font-black text-xl tracking-tight italic">OLX</span>
+          <div className="bg-white inline-block border-b-[3px] border-[#7c3aed] px-3 py-1.5 rounded-sm mb-3">
+            <Logo size={22} />
           </div>
           <p className="text-xs leading-relaxed text-white/50">
             Pakistan's No.1 online marketplace.<br />Buy and sell anything, for free.
@@ -40,7 +41,7 @@ export default function Footer() {
         <div>
           <p className="text-white font-bold mb-3 text-xs uppercase tracking-widest">Contact</p>
           <ul className="space-y-2 text-xs">
-            <li>support@olx.pk</li>
+            <li>support@bazaario.app</li>
             <li>0800-00786</li>
             <li>Karachi, Pakistan</li>
           </ul>
@@ -55,7 +56,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/30">
-        © {new Date().getFullYear()} OLX Clone — All rights reserved.
+        © {new Date().getFullYear()} Bazaario — All rights reserved.
       </div>
     </footer>
   )

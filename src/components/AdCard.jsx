@@ -68,7 +68,7 @@ export default function AdCard({ ad }) {
         )}
       </div>
       <div className="p-3">
-        <p className="font-black text-[#002f34] text-sm">{fmt(ad.price)}</p>
+        <p className="font-black text-[#241242] text-sm">{fmt(ad.price)}</p>
         <p className="text-sm text-gray-600 mt-0.5 line-clamp-2 leading-snug">{ad.title}</p>
         <div className="flex items-center justify-between mt-2">
           <span className="text-xs text-gray-400 truncate max-w-[90px]">{ad.location}</span>

@@ -160,7 +160,7 @@ export default function AdDetailPage() {
                 <div className="flex gap-2 p-3 overflow-x-auto border-t border-gray-100">
                   {ad.images.map((img, i) => (
                     <button key={img.id} onClick={() => setActiveImg(i)}
-                      className={`shrink-0 w-14 h-14 overflow-hidden rounded-lg border-2 transition ${i === activeImg ? 'border-[#002f34]' : 'border-transparent hover:border-gray-300'}`}>
+                      className={`shrink-0 w-14 h-14 overflow-hidden rounded-lg border-2 transition ${i === activeImg ? 'border-[#241242]' : 'border-transparent hover:border-gray-300'}`}>
                       <img src={img.image} alt="" className="w-full h-full object-cover" />
                     </button>
                   ))}
@@ -170,26 +170,26 @@ export default function AdDetailPage() {
 
             {/* Details + Description */}
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <h3 className="font-black text-[#002f34] mb-4 text-sm uppercase tracking-wide">Details</h3>
+              <h3 className="font-black text-[#241242] mb-4 text-sm uppercase tracking-wide">Details</h3>
               <table className="w-full text-sm mb-5">
                 <tbody>
                   <tr className="border-b border-gray-100">
                     <td className="py-2 text-gray-400 w-32">Condition</td>
-                    <td className="py-2 capitalize font-semibold text-[#002f34]">{ad.condition}</td>
+                    <td className="py-2 capitalize font-semibold text-[#241242]">{ad.condition}</td>
                   </tr>
                   <tr className="border-b border-gray-100">
                     <td className="py-2 text-gray-400">Location</td>
-                    <td className="py-2 font-semibold text-[#002f34]">{ad.location}</td>
+                    <td className="py-2 font-semibold text-[#241242]">{ad.location}</td>
                   </tr>
                   {ad.category && (
                     <tr>
                       <td className="py-2 text-gray-400">Category</td>
-                      <td className="py-2 font-semibold text-[#002f34]">{ad.category.icon} {ad.category.name}</td>
+                      <td className="py-2 font-semibold text-[#241242]">{ad.category.icon} {ad.category.name}</td>
                     </tr>
                   )}
                 </tbody>
               </table>
-              <h3 className="font-black text-[#002f34] mb-2 text-sm uppercase tracking-wide">Description</h3>
+              <h3 className="font-black text-[#241242] mb-2 text-sm uppercase tracking-wide">Description</h3>
               <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{ad.description}</p>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default function AdDetailPage() {
 
             {/* Price card */}
             <div className="bg-white rounded-xl border border-gray-200 p-5 lg:sticky lg:top-20">
-              <p className="text-2xl font-black text-[#002f34]">{fmt(ad.price)}</p>
+              <p className="text-2xl font-black text-[#241242]">{fmt(ad.price)}</p>
               <p className="text-base text-gray-700 mt-1 font-semibold leading-snug">{ad.title}</p>
               <p className="text-xs text-gray-400 mt-2 flex items-center gap-1">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,7 +215,7 @@ export default function AdDetailPage() {
                 {user && user.id === ad.seller.id ? (
                   <div className="flex gap-2">
                     <Link to={`/ads/${ad.id}/edit`}
-                      className="flex-1 text-center text-sm font-bold py-2.5 border-2 border-[#002f34] text-[#002f34] rounded-xl hover:bg-[#002f34]/5 transition">
+                      className="flex-1 text-center text-sm font-bold py-2.5 border-2 border-[#241242] text-[#241242] rounded-xl hover:bg-[#241242]/5 transition">
                       Edit Ad
                     </Link>
                     <button onClick={handleDelete}
@@ -228,7 +228,7 @@ export default function AdDetailPage() {
                     {user && (
                       <button
                         onClick={() => setShowMsgModal(true)}
-                        className="w-full flex items-center justify-center gap-2 bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition">
+                        className="w-full flex items-center justify-center gap-2 bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
@@ -237,7 +237,7 @@ export default function AdDetailPage() {
                     )}
                     {phoneRevealed && ad.seller.phone ? (
                       <a href={`tel:${ad.seller.phone}`}
-                        className="w-full flex items-center justify-center gap-2 bg-[#ffce32] hover:bg-yellow-400 text-[#002f34] font-black py-3 rounded-xl text-sm transition">
+                        className="w-full flex items-center justify-center gap-2 bg-[#ff5c8a] hover:bg-pink-400 text-[#241242] font-black py-3 rounded-xl text-sm transition">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                             d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -247,7 +247,7 @@ export default function AdDetailPage() {
                     ) : (
                       <button
                         onClick={() => setPhoneRevealed(true)}
-                        className="w-full bg-[#ffce32] hover:bg-yellow-400 text-[#002f34] font-black py-3 rounded-xl text-sm transition">
+                        className="w-full bg-[#ff5c8a] hover:bg-pink-400 text-[#241242] font-black py-3 rounded-xl text-sm transition">
                         {ad.seller.phone ? 'Show Phone Number' : 'Contact Seller'}
                       </button>
                     )}
@@ -283,11 +283,11 @@ export default function AdDetailPage() {
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Seller</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#002f34] flex items-center justify-center text-[#ffce32] font-black text-sm shrink-0">
+                <div className="w-10 h-10 rounded-full bg-[#241242] flex items-center justify-center text-[#ff5c8a] font-black text-sm shrink-0">
                   {ad.seller.username[0].toUpperCase()}
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#002f34]">{ad.seller.username}</p>
+                  <p className="text-sm font-bold text-[#241242]">{ad.seller.username}</p>
                   {ad.seller.city && <p className="text-xs text-gray-400">{ad.seller.city}</p>}
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function AdDetailPage() {
         {related.length > 0 && (
           <div className="mt-8">
             <div className="flex items-center gap-4 mb-4">
-              <h2 className="text-base font-black text-[#002f34] whitespace-nowrap">More from this category</h2>
+              <h2 className="text-base font-black text-[#241242] whitespace-nowrap">More from this category</h2>
               <div className="flex-1 h-px bg-gray-200" />
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -314,19 +314,19 @@ export default function AdDetailPage() {
           onClick={e => e.target === e.currentTarget && setShowReport(false)}>
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-black text-[#002f34]">Report Ad</h2>
+              <h2 className="text-lg font-black text-[#241242]">Report Ad</h2>
               <button onClick={() => setShowReport(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>
             </div>
             {reportDone ? (
               <div className="bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-xl text-center">
-                Report submitted. Thank you for keeping OLX safe.
+                Report submitted. Thank you for keeping Bazaario safe.
               </div>
             ) : (
               <form onSubmit={handleReport} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Reason</label>
+                  <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Reason</label>
                   <select value={reportReason} onChange={e => setReportReason(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white">
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#241242] bg-white">
                     <option value="spam">Spam or misleading</option>
                     <option value="fraud">Fraud or scam</option>
                     <option value="inappropriate">Inappropriate content</option>
@@ -335,9 +335,9 @@ export default function AdDetailPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Details (optional)</label>
+                  <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Details (optional)</label>
                   <textarea value={reportDetails} onChange={e => setReportDetails(e.target.value)} rows={3}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#002f34] bg-white"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#241242] bg-white"
                     placeholder="Any additional details..." />
                 </div>
                 <button type="submit" disabled={reportLoading}
@@ -355,7 +355,7 @@ export default function AdDetailPage() {
           onClick={e => e.target === e.currentTarget && setShowMsgModal(false)}>
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-black text-[#002f34]">Message Seller</h2>
+              <h2 className="text-lg font-black text-[#241242]">Message Seller</h2>
               <button onClick={() => setShowMsgModal(false)} className="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>
             </div>
             {msgSent ? (
@@ -366,13 +366,13 @@ export default function AdDetailPage() {
               <form onSubmit={handleMessage} className="space-y-4">
                 <p className="text-sm text-gray-500">Sending to <strong>{ad.seller.username}</strong> about "{ad.title}"</p>
                 <div>
-                  <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Message</label>
+                  <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Message</label>
                   <textarea value={msgBody} onChange={e => setMsgBody(e.target.value)} rows={4} required
                     placeholder="Hi, is this still available?"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#002f34] bg-white" />
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#241242] bg-white" />
                 </div>
                 <button type="submit" disabled={msgLoading}
-                  className="w-full bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50">
+                  className="w-full bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50">
                   {msgLoading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>

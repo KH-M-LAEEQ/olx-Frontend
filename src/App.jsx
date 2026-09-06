@@ -19,9 +19,9 @@ function NotFoundPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
       <p className="text-7xl mb-4">😕</p>
-      <h1 className="text-3xl font-black text-[#002f34] mb-2">Page Not Found</h1>
+      <h1 className="text-3xl font-black text-[#241242] mb-2">Page Not Found</h1>
       <p className="text-gray-500 mb-6">The page you're looking for doesn't exist.</p>
-      <Link to="/" className="bg-[#ffce32] text-[#002f34] font-black px-6 py-3 rounded-xl hover:bg-yellow-400 transition">
+      <Link to="/" className="bg-[#ff5c8a] text-[#241242] font-black px-6 py-3 rounded-xl hover:bg-pink-400 transition">
         Go Home
       </Link>
     </div>

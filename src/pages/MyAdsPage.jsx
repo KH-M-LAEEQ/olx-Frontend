@@ -64,9 +64,9 @@ export default function MyAdsPage() {
       <div className="max-w-3xl mx-auto px-4 py-7">
 
         <div className="flex items-center justify-between mb-5">
-          <h1 className="text-xl font-black text-[#002f34]">My Ads ({ads.length})</h1>
+          <h1 className="text-xl font-black text-[#241242]">My Ads ({ads.length})</h1>
           <Link to="/post-ad"
-            className="flex items-center gap-1 bg-[#ffce32] hover:bg-yellow-400 text-[#002f34] font-black px-4 py-2.5 rounded-xl text-sm transition">
+            className="flex items-center gap-1 bg-[#ff5c8a] hover:bg-pink-400 text-[#241242] font-black px-4 py-2.5 rounded-xl text-sm transition">
             <span className="text-base leading-none">+</span> Post New Ad
           </Link>
         </div>
@@ -74,10 +74,10 @@ export default function MyAdsPage() {
         {ads.length === 0 ? (
           <div className="bg-white rounded-2xl border border-gray-200 py-16 text-center">
             <p className="text-5xl mb-3">📦</p>
-            <p className="font-black text-[#002f34] text-lg mb-1">No ads posted yet</p>
+            <p className="font-black text-[#241242] text-lg mb-1">No ads posted yet</p>
             <p className="text-sm text-gray-400 mb-6">Start selling — post your first ad for free</p>
             <Link to="/post-ad"
-              className="bg-[#ffce32] hover:bg-yellow-400 text-[#002f34] font-black px-6 py-3 rounded-xl text-sm inline-block transition">
+              className="bg-[#ff5c8a] hover:bg-pink-400 text-[#241242] font-black px-6 py-3 rounded-xl text-sm inline-block transition">
               Post an Ad
             </Link>
           </div>
@@ -106,7 +106,7 @@ export default function MyAdsPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <Link to={`/ads/${ad.id}`}
-                        className="text-sm font-bold text-[#002f34] hover:underline truncate block">
+                        className="text-sm font-bold text-[#241242] hover:underline truncate block">
                         {ad.title}
                       </Link>
                       <div className="flex items-center gap-1 shrink-0">
@@ -121,7 +121,7 @@ export default function MyAdsPage() {
                         )}
                       </div>
                     </div>
-                    <p className="text-sm font-black text-[#002f34] mt-0.5">{fmt(ad.price)}</p>
+                    <p className="text-sm font-black text-[#241242] mt-0.5">{fmt(ad.price)}</p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       {ad.location}{ad.category ? ` · ${ad.category.name}` : ''}
                       {ad.expires_at && (
@@ -133,7 +133,7 @@ export default function MyAdsPage() {
 
                     <div className="flex flex-wrap gap-2 mt-3">
                       <Link to={`/ads/${ad.id}/edit`}
-                        className="text-xs border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:border-[#002f34] hover:text-[#002f34] font-semibold transition">
+                        className="text-xs border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:border-[#241242] hover:text-[#241242] font-semibold transition">
                         Edit
                       </Link>
                       <button onClick={() => handleToggleActive(ad.id)}

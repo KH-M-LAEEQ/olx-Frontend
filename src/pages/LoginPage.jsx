@@ -2,19 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import api from '../services/api'
-
-function OlxLogo({ size = 58 }) {
-  const h = Math.round(size * 44 / 96)
-  return (
-    <svg width={size} height={h} viewBox="0 0 96 44" fill="none">
-      <circle cx="18" cy="22" r="15" stroke="#3a77ff" strokeWidth="6" fill="none" />
-      <rect x="41" y="6" width="6" height="32" rx="3" fill="#3a77ff" />
-      <rect x="41" y="32" width="15" height="6" rx="3" fill="#3a77ff" />
-      <line x1="67" y1="6"  x2="94" y2="38" stroke="#3a77ff" strokeWidth="6.5" strokeLinecap="round" />
-      <line x1="94" y1="6"  x2="67" y2="38" stroke="#3a77ff" strokeWidth="6.5" strokeLinecap="round" />
-    </svg>
-  )
-}
+import Logo from '../components/Logo'
 
 export default function LoginPage() {
   const [form, setForm]       = useState({ username: '', password: '' })
@@ -163,7 +151,7 @@ export default function LoginPage() {
       <div className="w-full max-w-4xl flex rounded-3xl overflow-hidden shadow-xl">
 
         {/* ── Left panel: branding ── */}
-        <div className="hidden md:flex flex-col justify-between bg-[#002f34] w-2/5 p-10">
+        <div className="hidden md:flex flex-col justify-between bg-[#241242] w-2/5 p-10">
           <Link to="/">
             <svg width="70" height="32" viewBox="0 0 96 44" fill="none">
               <circle cx="18" cy="22" r="15" stroke="white" strokeWidth="6" fill="none" />
@@ -202,11 +190,11 @@ export default function LoginPage() {
 
           {/* Mobile logo */}
           <div className="md:hidden flex justify-center mb-6">
-            <Link to="/"><OlxLogo size={64} /></Link>
+            <Link to="/"><Logo size={64} /></Link>
           </div>
 
-          <h1 className="text-2xl font-black text-[#002f34] mb-1">Welcome back</h1>
-          <p className="text-sm text-gray-500 mb-7">Login to your OLX account</p>
+          <h1 className="text-2xl font-black text-[#241242] mb-1">Welcome back</h1>
+          <p className="text-sm text-gray-500 mb-7">Login to your Bazaario account</p>
 
           {/* Social buttons */}
           <div className="flex gap-3 mb-6">
@@ -258,19 +246,19 @@ export default function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Username</label>
+              <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Username</label>
               <input
                 type="text" name="username" value={form.username}
                 onChange={handleChange} required autoComplete="username"
                 placeholder="Enter your username"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3a77ff] focus:ring-2 focus:ring-[#3a77ff]/10 bg-white transition" />
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 bg-white transition" />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-[#002f34] uppercase tracking-wide">Password</label>
+                <label className="text-xs font-bold text-[#241242] uppercase tracking-wide">Password</label>
                 <button type="button" onClick={() => { setShowForgot(true); setForgotStep(1); setForgotErr(''); setForgotMsg('') }}
-                  className="text-xs text-[#3a77ff] hover:underline font-medium">
+                  className="text-xs text-[#7c3aed] hover:underline font-medium">
                   Forgot password?
                 </button>
               </div>
@@ -279,7 +267,7 @@ export default function LoginPage() {
                   type={showPw ? 'text' : 'password'} name="password" value={form.password}
                   onChange={handleChange} required autoComplete="current-password"
                   placeholder="Enter your password"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:border-[#3a77ff] focus:ring-2 focus:ring-[#3a77ff]/10 bg-white transition" />
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 bg-white transition" />
                 <button
                   type="button"
                   onClick={() => setShowPw(p => !p)}
@@ -300,7 +288,7 @@ export default function LoginPage() {
 
             <button
               type="submit" disabled={loading}
-              className="w-full bg-[#002f34] hover:bg-[#013a40] active:scale-[0.98] text-white font-black py-3.5 rounded-xl text-sm transition disabled:opacity-50 mt-1">
+              className="w-full bg-[#241242] hover:bg-[#1a0a33] active:scale-[0.98] text-white font-black py-3.5 rounded-xl text-sm transition disabled:opacity-50 mt-1">
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -315,7 +303,7 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{' '}
-            <Link to="/signup" className="text-[#3a77ff] font-bold hover:underline">Register free</Link>
+            <Link to="/signup" className="text-[#7c3aed] font-bold hover:underline">Register free</Link>
           </p>
         </div>
       </div>
@@ -328,7 +316,7 @@ export default function LoginPage() {
         onClick={e => { if (e.target === e.currentTarget) setShowForgot(false) }}>
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-7">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-black text-[#002f34]">Reset Password</h2>
+            <h2 className="text-lg font-black text-[#241242]">Reset Password</h2>
             <button onClick={() => setShowForgot(false)} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
           </div>
 
@@ -341,13 +329,13 @@ export default function LoginPage() {
               <p className="text-sm text-gray-500">Enter your account email and we'll send you a 6-digit reset code.</p>
               {forgotErr && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{forgotErr}</p>}
               <div>
-                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Email</label>
+                <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Email</label>
                 <input type="email" value={forgotEmail} onChange={e => setForgotEmail(e.target.value)} required
                   placeholder="your@email.com"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#241242] bg-white" />
               </div>
               <button type="submit" disabled={forgotLoading}
-                className="w-full bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50">
+                className="w-full bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-50">
                 {forgotLoading ? 'Sending...' : 'Send Reset Code'}
               </button>
             </form>
@@ -368,22 +356,22 @@ export default function LoginPage() {
                   <input key={i} ref={otpRefs[i]} type="text" inputMode="numeric" maxLength={1}
                     value={d} onChange={e => handleOtpDigit(i, e.target.value)} onKeyDown={e => handleOtpKey(i, e)}
                     className={`w-10 h-12 text-center text-xl font-black border-2 rounded-xl focus:outline-none transition
-                      ${d ? 'border-[#002f34] bg-[#002f34]/5 text-[#002f34]' : 'border-gray-200'}
-                      focus:border-[#002f34]`} />
+                      ${d ? 'border-[#241242] bg-[#241242]/5 text-[#241242]' : 'border-gray-200'}
+                      focus:border-[#241242]`} />
                 ))}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">New Password</label>
+                <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">New Password</label>
                 <input type="password" value={resetPasswords.password} onChange={e => setResetPasswords(p => ({ ...p, password: e.target.value }))} required
                   placeholder="Min 8 characters"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#241242] bg-white" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-[#002f34] mb-1.5 uppercase tracking-wide">Confirm Password</label>
+                <label className="block text-xs font-bold text-[#241242] mb-1.5 uppercase tracking-wide">Confirm Password</label>
                 <input type="password" value={resetPasswords.password2} onChange={e => setResetPasswords(p => ({ ...p, password2: e.target.value }))} required
                   placeholder="Repeat password"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#002f34] bg-white" />
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#241242] bg-white" />
               </div>
               <div className="flex gap-2">
                 <button type="button" onClick={() => { setForgotStep(1); setOtpDigits(['','','','','','']); setDevOtp(''); setForgotErr('') }}
@@ -391,7 +379,7 @@ export default function LoginPage() {
                   Back
                 </button>
                 <button type="submit" disabled={forgotLoading || otpDigits.join('').length < 6}
-                  className="flex-1 bg-[#002f34] hover:bg-[#013a40] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-40">
+                  className="flex-1 bg-[#241242] hover:bg-[#1a0a33] text-white font-black py-3 rounded-xl text-sm transition disabled:opacity-40">
                   {forgotLoading ? 'Resetting...' : 'Reset Password'}
                 </button>
               </div>

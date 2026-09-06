@@ -11,9 +11,9 @@ const INFO_CARDS = [
       </svg>
     ),
     label: 'Email Us',
-    value: 'support@olx.pk',
+    value: 'support@bazaario.app',
     sub: 'We reply within 24 hours',
-    href: 'mailto:support@olx.pk',
+    href: 'mailto:support@bazaario.app',
   },
   {
     icon: (
@@ -62,7 +62,7 @@ const FAQS = [
   },
   {
     q: 'My account was suspended. What should I do?',
-    a: 'Send us an email at support@olx.pk with your username and we\'ll review your account within 2 business days.',
+    a: 'Send us an email at support@bazaario.app with your username and we\'ll review your account within 2 business days.',
   },
   {
     q: 'How do I report a fraudulent listing?',
@@ -120,9 +120,9 @@ export default function ContactPage() {
     <div className="bg-[#f2f4f5] min-h-screen">
 
       {/* ── Hero ── */}
-      <div className="bg-[#002f34] py-16 px-4">
+      <div className="bg-[#241242] py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[#ffce32] text-xs font-black uppercase tracking-[0.2em] mb-3">Support Center</p>
+          <p className="text-[#ff5c8a] text-xs font-black uppercase tracking-[0.2em] mb-3">Support Center</p>
           <h1 className="text-4xl md:text-5xl font-black text-white leading-tight mb-4">
             How can we help you?
           </h1>
@@ -140,15 +140,15 @@ export default function ContactPage() {
               key={card.label}
               className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-3 hover:shadow-md transition group"
             >
-              <div className="w-11 h-11 rounded-xl bg-[#002f34]/5 flex items-center justify-center text-[#002f34] group-hover:bg-[#002f34] group-hover:text-white transition">
+              <div className="w-11 h-11 rounded-xl bg-[#241242]/5 flex items-center justify-center text-[#241242] group-hover:bg-[#241242] group-hover:text-white transition">
                 {card.icon}
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-0.5">{card.label}</p>
                 {card.href ? (
-                  <a href={card.href} className="text-[#002f34] font-bold text-sm hover:text-[#3a77ff] transition">{card.value}</a>
+                  <a href={card.href} className="text-[#241242] font-bold text-sm hover:text-[#7c3aed] transition">{card.value}</a>
                 ) : (
-                  <p className="text-[#002f34] font-bold text-sm">{card.value}</p>
+                  <p className="text-[#241242] font-bold text-sm">{card.value}</p>
                 )}
                 <p className="text-gray-400 text-xs mt-0.5">{card.sub}</p>
               </div>
@@ -163,7 +163,7 @@ export default function ContactPage() {
 
           {/* Form */}
           <div className="lg:col-span-3 bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
-            <h2 className="text-2xl font-black text-[#002f34] mb-1">Send us a message</h2>
+            <h2 className="text-2xl font-black text-[#241242] mb-1">Send us a message</h2>
             <p className="text-gray-400 text-sm mb-7">Fill in the form below and we'll get back to you within 24 hours.</p>
 
             {status === 'error' && (
@@ -194,7 +194,7 @@ export default function ContactPage() {
               <Field label="Subject" name="subject" type="text" placeholder="What is your inquiry about?"
                 value={form.subject} onChange={handleChange} error={errors.subject} />
               <div>
-                <label className="block text-xs font-black text-[#002f34] uppercase tracking-widest mb-1.5">
+                <label className="block text-xs font-black text-[#241242] uppercase tracking-widest mb-1.5">
                   Message
                 </label>
                 <textarea
@@ -203,7 +203,7 @@ export default function ContactPage() {
                   className={`w-full border rounded-xl px-4 py-3 text-sm resize-none focus:outline-none transition
                     ${errors.message
                       ? 'border-red-400 bg-red-50 focus:border-red-400 focus:ring-2 focus:ring-red-200'
-                      : 'border-gray-200 focus:border-[#3a77ff] focus:ring-2 focus:ring-[#3a77ff]/10 bg-white'}`}
+                      : 'border-gray-200 focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 bg-white'}`}
                 />
                 {errors.message && <FieldError msg={errors.message} />}
                 <p className="text-xs text-gray-400 mt-1 text-right">{form.message.length} / 1000</p>
@@ -211,7 +211,7 @@ export default function ContactPage() {
 
               <button
                 type="submit" disabled={loading}
-                className="w-full bg-[#002f34] hover:bg-[#013a40] active:scale-[0.98] text-white font-black py-3.5 rounded-xl text-sm transition disabled:opacity-60 flex items-center justify-center gap-2">
+                className="w-full bg-[#241242] hover:bg-[#1a0a33] active:scale-[0.98] text-white font-black py-3.5 rounded-xl text-sm transition disabled:opacity-60 flex items-center justify-center gap-2">
                 {loading ? (
                   <>
                     <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -236,7 +236,7 @@ export default function ContactPage() {
           <div className="lg:col-span-2 flex flex-col gap-6">
 
             {/* Trust badges */}
-            <div className="bg-[#002f34] rounded-3xl p-7 text-white">
+            <div className="bg-[#241242] rounded-3xl p-7 text-white">
               <h3 className="font-black text-lg mb-5">Why reach out to us?</h3>
               <ul className="space-y-4">
                 {[
@@ -258,7 +258,7 @@ export default function ContactPage() {
 
             {/* Quick links */}
             <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-7">
-              <h3 className="font-black text-[#002f34] text-base mb-4">Quick Links</h3>
+              <h3 className="font-black text-[#241242] text-base mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 {[
                   { label: 'Browse all categories', to: '/' },
@@ -267,7 +267,7 @@ export default function ContactPage() {
                   { label: 'Edit my profile', to: '/profile' },
                 ].map(({ label, to }) => (
                   <li key={to}>
-                    <Link to={to} className="flex items-center justify-between text-sm text-gray-600 hover:text-[#3a77ff] font-medium py-1.5 border-b border-gray-50 last:border-0 transition group">
+                    <Link to={to} className="flex items-center justify-between text-sm text-gray-600 hover:text-[#7c3aed] font-medium py-1.5 border-b border-gray-50 last:border-0 transition group">
                       {label}
                       <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -285,8 +285,8 @@ export default function ContactPage() {
       {/* ── FAQ ── */}
       <div className="max-w-3xl mx-auto px-4 lg:px-8 pb-16">
         <div className="text-center mb-8">
-          <p className="text-[#3a77ff] text-xs font-black uppercase tracking-[0.2em] mb-2">FAQs</p>
-          <h2 className="text-2xl font-black text-[#002f34]">Frequently Asked Questions</h2>
+          <p className="text-[#7c3aed] text-xs font-black uppercase tracking-[0.2em] mb-2">FAQs</p>
+          <h2 className="text-2xl font-black text-[#241242]">Frequently Asked Questions</h2>
         </div>
         <div className="space-y-3">
           {FAQS.map((faq, i) => (
@@ -295,7 +295,7 @@ export default function ContactPage() {
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-4 text-left focus:outline-none group"
               >
-                <span className="font-bold text-sm text-[#002f34] group-hover:text-[#3a77ff] transition">{faq.q}</span>
+                <span className="font-bold text-sm text-[#241242] group-hover:text-[#7c3aed] transition">{faq.q}</span>
                 <svg
                   className={`w-5 h-5 text-gray-400 shrink-0 ml-4 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`}
                   fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -314,7 +314,7 @@ export default function ContactPage() {
           Still have questions?{' '}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-[#3a77ff] font-bold hover:underline"
+            className="text-[#7c3aed] font-bold hover:underline"
           >
             Send us a message ↑
           </button>
@@ -328,7 +328,7 @@ export default function ContactPage() {
 function Field({ label, name, type, placeholder, value, onChange, error }) {
   return (
     <div>
-      <label className="block text-xs font-black text-[#002f34] uppercase tracking-widest mb-1.5">
+      <label className="block text-xs font-black text-[#241242] uppercase tracking-widest mb-1.5">
         {label}
       </label>
       <input
@@ -337,7 +337,7 @@ function Field({ label, name, type, placeholder, value, onChange, error }) {
         className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none transition
           ${error
             ? 'border-red-400 bg-red-50 focus:border-red-400 focus:ring-2 focus:ring-red-200'
-            : 'border-gray-200 focus:border-[#3a77ff] focus:ring-2 focus:ring-[#3a77ff]/10 bg-white'}`}
+            : 'border-gray-200 focus:border-[#7c3aed] focus:ring-2 focus:ring-[#7c3aed]/10 bg-white'}`}
       />
       {error && <FieldError msg={error} />}
     </div>
